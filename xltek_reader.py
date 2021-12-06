@@ -131,7 +131,7 @@ class XLTEK_Reader:
         self.subj = subj
         if study_ID is None:
             # self.f_study_ID = self.get_XLTEK_ID(subj)
-            pass
+            raise ValueError("Missing Subject ID")
         else:
             self.f_study_ID = study_ID
         self._first_name = ''
