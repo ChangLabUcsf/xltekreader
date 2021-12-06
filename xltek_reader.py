@@ -34,14 +34,14 @@ import multiprocessing.pool
 import time, datetime, pytz
 
 # Downloaded Libraries #
-import pymysql
-pymysql.install_as_MySQLdb()
+# import pymysql
+# pymysql.install_as_MySQLdb()
 import numpy as np
 
 # Imports from Local Packages #
-cur_dir = os.getcwd()
-sys.path.append(os.path.join(cur_dir, 'cldb-framework/changlabdb'))
-from changlabdb.backend import *
+# cur_dir = os.getcwd()
+# sys.path.append(os.path.join(cur_dir, 'cldb-framework/changlabdb'))
+# from changlabdb.backend import *
 from xlrdlib2.x64.win32_1_0_rc1 import libpyxlrd
 
 
@@ -50,6 +50,7 @@ from xlrdlib2.x64.win32_1_0_rc1 import libpyxlrd
 
 _FILETIME_null_date = datetime.datetime(1601, 1, 1, 0, 0, 0, tzinfo=pytz.utc)
 ucsf_time = pytz.timezone('America/Los_Angeles')
+
 
 # Classes #
 class XLTEK_Reader:
@@ -129,7 +130,8 @@ class XLTEK_Reader:
         # Identifiers #
         self.subj = subj
         if study_ID is None:
-            self.f_study_ID = self.get_XLTEK_ID(subj)
+            # self.f_study_ID = self.get_XLTEK_ID(subj)
+            pass
         else:
             self.f_study_ID = study_ID
         self._first_name = ''
@@ -179,26 +181,26 @@ class XLTEK_Reader:
             self.start_updater()
 
 
-    def get_XLTEK_ID(self, subj):
-        '''
-        get_XLTEK_ID: Uses the database to return the XLTEK ID
-
-        Parameters
-        :param subj:    string      The subject lab reference ID
-
-        Returns
-        :xltek_num:        string      The XLTEK ID
-        '''
-        xltek_num = 0
-        for i in PatientPropertyRecord.property_type.get_queryset(PatientPropertyDefinition="First Xltek Study ID"):
-            if "First Xltek Study ID" in str(i):
-                for j in i.patientpropertyrecord_set.all():
-                    if str(subj) in str(j.patient):
-                        xltek_num = j.property_value
-                        return xltek_num
-        if xltek_num == 0:
-            raise NameError("Subject %s does not have XLTEK Number inputted in Database, please input the XLTEK number "
-                            "in database and try again." %(subj))
+    # def get_XLTEK_ID(self, subj):
+    #     '''
+    #     get_XLTEK_ID: Uses the database to return the XLTEK ID
+    #
+    #     Parameters
+    #     :param subj:    string      The subject lab reference ID
+    #
+    #     Returns
+    #     :xltek_num:        string      The XLTEK ID
+    #     '''
+    #     xltek_num = 0
+    #     for i in PatientPropertyRecord.property_type.get_queryset(PatientPropertyDefinition="First Xltek Study ID"):
+    #         if "First Xltek Study ID" in str(i):
+    #             for j in i.patientpropertyrecord_set.all():
+    #                 if str(subj) in str(j.patient):
+    #                     xltek_num = j.property_value
+    #                     return xltek_num
+    #     if xltek_num == 0:
+    #         raise NameError("Subject %s does not have XLTEK Number inputted in Database, please input the XLTEK number "
+    #                         "in database and try again." %(subj))
 
     def get_neuro_dirs(self, neuroworks_dirs=None):
         '''
